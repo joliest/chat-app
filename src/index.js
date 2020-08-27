@@ -12,8 +12,20 @@ const PORT = process.env.PORT || 3000
 const PUBLIC_FOLDER = path.join(__dirname, '../public')
 app.use(express.static(PUBLIC_FOLDER))
 
-io.on('connection', () => {
+
+let count = 0;
+io.on('connection', (socket) => {
     console.log('New Websocket Connection')
+
+    // sends this to the client side
+    socket.emit('countUpdated', count++)
+
+    socket.on('increment', () => {
+        count++
+        // socket.emit('countUpdated', count)
+        // emits to every single client connection
+        io.emit('countUpdated', count)
+    })
 })
 
 server.listen(PORT, () => {
