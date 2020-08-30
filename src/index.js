@@ -13,18 +13,12 @@ const PUBLIC_FOLDER = path.join(__dirname, '../public')
 app.use(express.static(PUBLIC_FOLDER))
 
 
-let count = 0;
 io.on('connection', (socket) => {
     console.log('New Websocket Connection')
+    socket.emit('message', 'Welcome!')
 
-    // sends this to the client side
-    socket.emit('countUpdated', count++)
-
-    socket.on('increment', () => {
-        count++
-        // socket.emit('countUpdated', count)
-        // emits to every single client connection
-        io.emit('countUpdated', count)
+    socket.on('sendMessage', message => {
+        io.emit('message', message)
     })
 })
 
