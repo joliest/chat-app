@@ -13,17 +13,18 @@
         <!-- Using mustache -->
         <script id="message-template" type="text/html">
             <div>
-                <p>{{message}}</p>
+                <p>{{createdAt}} - {{message}}</p>
             </div>
         </script>
 
         <script id="location-template" type="text/html">
             <div>
                 <p>
+                    {{ createdAt }} - 
                     <a 
                         href="{{url}}" 
                         target="_blank">
-                        My current location
+                        my current location
                     </a>
                 </p>
             </div>
