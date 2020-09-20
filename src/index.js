@@ -41,6 +41,10 @@ io.on('connection', (socket) => {
         socket.broadcast
             .to(user.room)
             .emit('message', generateMessage(ADMIN, `${user.username} has joined`))
+            io.to(user.room).emit('roomData', {
+                room: user.room,
+                users: getUserInRoom(user.room)
+            })
 
         callback()
     })
@@ -74,6 +78,11 @@ io.on('connection', (socket) => {
         if (user) {
             io.to(user.room)
               .emit('message', generateMessage(ADMIN, `${user.username} has left`))
+
+            io.to(user.room).emit('roomData', {
+                room: user.room,
+                users: getUserInRoom(user.room)
+            })
         }
     })
 })
